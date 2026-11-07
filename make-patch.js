@@ -1,8 +1,10 @@
-// make-patch.js — génère patch/patch.json (le code de l'app) : `npm run patch` puis `git add patch && git commit && git push`
+// make-patch.js — génère patch/patch.json (le code de l'app) : `npm run patch` puis `git add . && git commit -m "..." && git push`
+// Inclut tous les fichiers .js / .css / .html / .ps1 à la racine du projet (nouveaux fichiers compris).
 const fs = require('fs'), path = require('path'), crypto = require('crypto');
 const pkg = require('./package.json');
 
-const names = fs.readdirSync(__dirname).filter(f => /^(main|preload|renderer)\.js$|^style\.css$|^index\.html$|\.ps1$/i.test(f));
+const SKIP = /^(boot\.js|make-patch\.js)$/i;
+const names = fs.readdirSync(__dirname).filter(f => fs.statSync(path.join(__dirname, f)).isFile() && !SKIP.test(f) && /\.(js|css|html|ps1)$/i.test(f));
 const files = {};
 for (const n of names) files[n] = { enc: 'utf8', data: fs.readFileSync(path.join(__dirname, n), 'utf8') };
 
