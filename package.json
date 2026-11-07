@@ -2,7 +2,10 @@
   "name": "halo",
   "version": "0.1.0",
   "main": "boot.js",
-  "repository": "github.com/Mirage00k/Halo-Releases",
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/Mirage00k/Halo-Releases.git"
+  },
   "scripts": {
     "start": "electron .",
     "build": "electron-builder --win portable --publish never",
@@ -33,9 +36,6 @@
     ],
     "asarUnpack": [
       "*.ps1"
-    ],
-    "publish": [
-      { "provider": "github", "releaseType": "release" }
     ],
     "win": {
       "target": "portable",
