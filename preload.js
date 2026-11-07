@@ -1,9 +1,10 @@
-const { contextBridge, ipcRenderer: r } = require('electron');
+const { contextBridge, ipcRenderer: r, webUtils } = require('electron');
 const path = require('path');
 // lucide-static vit dans l'asar de l'exe ; quand le code vient du dossier de mise à jour, boot.js fournit HALO_BASE
 const iconsFile = () => { try { return require.resolve('lucide-static/icon-nodes.json'); } catch { return path.join(process.env.HALO_BASE || __dirname, 'node_modules', 'lucide-static', 'icon-nodes.json'); } };
 contextBridge.exposeInMainWorld('api', {
   icons: require(iconsFile()),
+  filePath: f => webUtils.getPathForFile(f), linkInfo: p => r.invoke('link:info', p), launchApp: (p, a, c) => r.send('launch:app', p, a, c),
   sys: () => r.invoke('sys'), getCfg: () => r.invoke('cfg:get'), setCfg: p => r.invoke('cfg:set', p),
   stats: () => r.invoke('stats'), pick: () => r.invoke('pick'), pickImage: () => r.invoke('pick:image'),
   launch: t => r.send('launch', t), quit: () => r.send('quit'), ignore: v => r.send('ignore', v),

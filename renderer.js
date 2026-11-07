@@ -125,10 +125,12 @@ const LBLK = { add: 'addApp', set: 'settings', hid: 'hide', out: 'leave' };
 const togRed = () => cfg.state === 'reduced';
 const defIcon = b => b.type === 'tog' ? (togRed() ? 'chevrons-right' : 'chevrons-left') : (ICD[b.type] || 'app-window');
 const defLbl = b => b.type === 'tog' ? T(togRed() ? 'expand' : 'collapse') : T(LBLK[b.type] || 'mBuiltin');
-const miniIcon = a => a.logo ? `<img src="${a.logo}" draggable="false">` : ic(a.icon || 'app-window', 12);
+const tintH = b => `<span class="tint" style="--m:url(${b.mask})"></span>`;
+const isTint = b => !!(b.tint && b.mask && b.logo);
+const miniIcon = a => isTint(a) ? tintH(a) : a.logo ? `<img src="${a.logo}" draggable="false">` : ic(a.icon || 'app-window', 12);
 const folderIcon = (b, s = 22) => (b.items || []).length ? `<span class="fg">${b.items.slice(0, 4).map(a => `<i>${miniIcon(a)}</i>`).join('')}</span>` : ic('folder', s);
 const bname = b => b.type === 'folder' ? (b.name || T('mFolder')) : b.type === 'app' ? (b.name || '') : b.type === 'profile' ? T('mProfile') : b.type === 'stats' ? T('mStats') : b.type === 'sep' ? T('mSep') : b.type === 'spacer' ? T('mSpacer') : (b.label || defLbl(b));
-const bicon = (b, s = 22) => b.type === 'folder' ? folderIcon(b, s) : b.logo ? `<img src="${b.logo}" draggable="false">` : ic(b.icon || defIcon(b), s);
+const bicon = (b, s = 22) => b.type === 'folder' ? folderIcon(b, s) : isTint(b) ? tintH(b) : b.logo ? `<img src="${b.logo}" draggable="false">` : ic(b.icon || defIcon(b), s);
 const defLayout = (apps = []) => [{ type: 'profile' }, { type: 'stats', cpu: true, ram: true, ssd: true, up: true }, ...apps.map(a => ({ type: 'app', ...a })), { type: 'add' }, { type: 'spacer' }, { type: 'sep' }, { type: 'tog' }, { type: 'set' }, { type: 'hid' }, { type: 'out' }].map(b => ({ id: uid(), visible: true, ...b }));
 const setLayout = L => { persist({ layout: L }); buildBar(); refreshFold(); };
 const addBlock = b => { const L = cfg.layout.slice(), i = L.findIndex(x => x.type === 'add'); L.splice(i < 0 ? L.length : i, 0, { id: uid(), visible: true, ...b }); setLayout(L); };
@@ -156,8 +158,9 @@ function blockHtml(b, i) {
   }
   return item(bicon(b), bname(b), t === 'app' || t === 'folder' ? '' : t, i, `data-b="${b.id}"`);
 }
+const launchB = b => b.args ? api.launchApp(b.path, b.args, b.cwd || '') : api.launch(b.path);
 const act = b => ({
-  app: () => api.launch(b.path), folder: () => openFold(b.id), add: () => editItem(null, 'app'), tog: () => setState(togRed() ? 'expanded' : 'reduced'),
+  app: () => launchB(b), folder: () => openFold(b.id), add: () => editItem(null, 'app'), tog: () => setState(togRed() ? 'expanded' : 'reduced'),
   set: () => openWin('set'), hid: () => setState('hidden'), out: () => api.quit()
 })[b.type]?.();
 function buildBar() {
@@ -533,7 +536,7 @@ function drawFold() {
   g.querySelectorAll('.ftile').forEach(e => {
     const a = it.find(x => x.id === e.dataset.b); if (!a) return;
     bindDrag(e, a); bindDrop(e, a, b.id, true);
-    e.onclick = () => { api.launch(a.path); closeFold(); };
+    e.onclick = () => { launchB(a); closeFold(); };
     e.oncontextmenu = ev => { ev.preventDefault(); editItem(a.id); };
   });
   placeFold();
@@ -582,7 +585,7 @@ function drawAdd(still) {
       grid.querySelectorAll('div').forEach(d => d.onclick = () => { draft.icon = d.dataset.n; grid.querySelectorAll('.sel').forEach(x => x.classList.remove('sel')); d.classList.add('sel'); if (!draft.logo) g('a-lp').innerHTML = ic(draft.icon, 18); });
     };
     show(''); g('a-q').oninput = e => show(e.target.value);
-    g('a-logo').onclick = async () => { const raw = await api.pickImage(); if (!raw) return; const l = await toLogo(raw); if (!l) return; draft.logo = l; drawAdd(true); };
+    g('a-logo').onclick = async () => { const raw = await api.pickImage(); if (!raw) return; const l = await toLogo(raw); if (!l) return; draft.logo = l; draft.tint = false; draft.mask = ''; drawAdd(true); };
     if (g('a-logox')) g('a-logox').onclick = () => { draft.logo = ''; drawAdd(true); };
     if (g('a-def')) g('a-def').onclick = () => { draft.icon = ''; draft.logo = ''; draft.label = ''; drawAdd(true); };
   } else ST.forEach(([k]) => g('a-st-' + k).onchange = e => draft[k] = e.target.checked);
@@ -625,7 +628,7 @@ function moveT(id, tid, after) {
 }
 function pinApp(r) {
   if (cfg.task.items.some(a => a.path === r.path)) return;
-  setTask({ items: [...cfg.task.items, { id: uid(), name: r.name, path: r.path, logo: r.logo || '', icon: r.icon || '', exe: r.exe }] }); buildTask();
+  setTask({ items: [...cfg.task.items, { id: uid(), name: r.name, path: r.path, logo: r.logo || '', icon: r.icon || '', exe: r.exe, args: r.args || '', cwd: r.cwd || '' }] }); buildTask();
 }
 let wins = { fp: 0, w: [] }, appSig = '';
 const exeKey = p => (p || '').toLowerCase();
@@ -652,7 +655,7 @@ function drawApps(force) {
   ap.ondrop = e => {
     if (tdg || !dg) return; e.preventDefault();
     const a = findB(dg.id); dg = null; clrDrop();
-    if (a && a.type === 'app') pinApp({ name: a.name, path: a.path, logo: a.logo, icon: a.icon });
+    if (a && a.type === 'app') pinApp({ name: a.name, path: a.path, logo: a.logo, icon: a.icon, args: a.args, cwd: a.cwd });
   };
   // mise à jour différentielle : les éléments existants sont conservés (pas de clignotement, survol et animations préservés)
   const keep = new Set(ents.map(e => e.key));
@@ -678,7 +681,7 @@ function drawApps(force) {
     el.onclick = () => {
       if (e.ws.length) return focusGroup(e.ws);
       el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); setTimeout(() => el.classList.remove('bump'), 650);
-      api.launch(a.path);
+      launchB(a);
     };
     el.oncontextmenu = ev => { ev.preventDefault(); setTask({ items: cfg.task.items.filter(x => x.id !== a.id) }); buildTask(); };
     el.ondragstart = ev => { tdg = a.id; ev.dataTransfer.effectAllowed = 'move'; ev.dataTransfer.setData('text/plain', a.id); setTimeout(() => el.classList.add('dragging-item')); };
@@ -1115,3 +1118,62 @@ Promise.all([api.getCfg(), api.sys()]).then(([c, s]) => {
   theme(); buildBar(); setInterval(tick, 1500); startLive(); if (pendMedia) onMediaMsg(pendMedia);
   if (!cfg.setupDone) { bar.style.display = 'none'; $('#isl').style.display = 'none'; openSetup(true); } else initTask(); // premier lancement : seul le setup est affiché
 });
+
+/* ===== Glisser une app depuis le bureau / l'explorateur (.lnk, .exe, .url…) =====
+   Un raccourci est résolu vers le vrai programme (cible + arguments) ; le logo est ajouté en couleur d'accent. */
+const fileDrag = e => !!(e.dataTransfer && [...(e.dataTransfer.types || [])].includes('Files'));
+// logo -> silhouette : si l'icône a un fond uni dominant (cercle, carré arrondi…), on garde le dessin par-dessus ce fond ; sinon sa transparence
+const toMask = src => new Promise(res => {
+  const i = new Image();
+  i.onload = () => {
+    try {
+      const n = 128, c = document.createElement('canvas'); c.width = c.height = n;
+      const x = c.getContext('2d', { willReadFrequently: true }), k = Math.min(n / i.width, n / i.height), w = i.width * k, h = i.height * k;
+      x.imageSmoothingQuality = 'high'; x.drawImage(i, (n - w) / 2, (n - h) / 2, w, h);
+      const d = x.getImageData(0, 0, n, n), p = d.data, cnt = new Map(); let op = 0;
+      for (let j = 0; j < p.length; j += 4) if (p[j + 3] > 200) { op++; const key = ((p[j] >> 4) << 8) | ((p[j + 1] >> 4) << 4) | (p[j + 2] >> 4); cnt.set(key, (cnt.get(key) || 0) + 1); }
+      let bk = 0, bn = 0; cnt.forEach((v, key) => { if (v > bn) { bn = v; bk = key; } });
+      const br = ((bk >> 8) & 15) * 17, bg = ((bk >> 4) & 15) * 17, bb = (bk & 15) * 17;
+      const A = new Float32Array(n * n); let sum = 0;
+      for (let j = 0; j < A.length; j++) { const q = j * 4; A[j] = (p[q + 3] / 255) * Math.min(1, Math.hypot(p[q] - br, p[q + 1] - bg, p[q + 2] - bb) / 110); sum += A[j]; }
+      const glyph = op > n * n * .3 && bn > op * .4 && sum > n * n * .02;
+      for (let j = 0; j < A.length; j++) { const q = j * 4; p[q] = p[q + 1] = p[q + 2] = 255; p[q + 3] = Math.round((glyph ? A[j] : p[q + 3] / 255) * 255); }
+      x.putImageData(d, 0, 0); res(c.toDataURL('image/png'));
+    } catch { res(''); }
+  };
+  i.onerror = () => res(''); i.src = src;
+});
+async function dropApp(file) {
+  if (!file) return null;
+  let target = file, args = '', cwd = '';
+  if (/\.lnk$/i.test(file)) { const li = await api.linkInfo(file); if (li && li.target) { target = li.target; args = li.args || ''; cwd = li.cwd || ''; } }
+  if (cfg.layout.some(b => b.type === 'app' && b.path === target && (b.args || '') === args)) return null;
+  const name = file.split(/[\\/]/).pop().replace(/\.\w+$/, '');
+  const logo = (await api.iconFile(file)) || (await api.iconFile(target)) || '';
+  const mask = logo ? await toMask(logo) : '';
+  return { type: 'app', name, path: target, args, cwd, logo, mask, tint: !!(logo && mask), icon: 'app-window' };
+}
+if (!ISL) {
+  let dropT = 0;
+  const hitOf = e => (e.target.closest && e.target.closest('#bar [data-b]')) || null;
+  const after = (e, el) => { const r = el.getBoundingClientRect(); return e.clientY > r.top + r.height / 2; };
+  document.addEventListener('dragover', e => {
+    if (!fileDrag(e)) return;
+    e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; clrDrop();
+    const el = hitOf(e); if (el) el.classList.add(after(e, el) ? 'dropa' : 'dropb');
+    bar.classList.toggle('filedrop', !!(e.target.closest && e.target.closest('#bar')));
+    clearTimeout(dropT); dropT = setTimeout(() => { clrDrop(); bar.classList.remove('filedrop'); }, 250);
+  });
+  document.addEventListener('drop', async e => {
+    if (!fileDrag(e)) return;
+    e.preventDefault(); clearTimeout(dropT); clrDrop(); bar.classList.remove('filedrop');
+    const el = hitOf(e), aft = el ? after(e, el) : false, hid = el ? el.dataset.b : '';
+    const files = [...e.dataTransfer.files].map(f => { try { return api.filePath(f); } catch { return ''; } }).filter(Boolean);
+    const added = []; for (const f of files) { const b = await dropApp(f); if (b) added.push(b); }
+    if (!added.length) return;
+    const L = cloneL(); let i = hid ? L.findIndex(x => x.id === hid) : -1;
+    if (i >= 0) { if (aft) i++; } else { i = L.findIndex(x => x.type === 'add'); if (i < 0) i = L.length; }
+    added.forEach((b, k) => L.splice(i + k, 0, { id: uid(), visible: true, ...b }));
+    setLayout(L); if (WINS.set.open) drawWinMain(true);
+  });
+}

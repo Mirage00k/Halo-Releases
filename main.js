@@ -408,6 +408,17 @@ function startWins() {
 }
 ipcMain.on('win:focus', (_, h, pid) => worker(`focus ${Number(h)} ${Number(pid)}`));
 ipcMain.handle('link:target', (_, p) => { try { return shell.readShortcutLink(p).target || p; } catch { return p; } });
+// raccourci .lnk -> vrai programme (cible, arguments, dossier de travail)
+ipcMain.handle('link:info', (_, p) => { try { const l = shell.readShortcutLink(p); return { target: l.target || '', args: l.args || '', cwd: l.cwd || '' }; } catch { return { target: '', args: '', cwd: '' }; } });
+// lance un programme avec ses arguments (ex. Discord : Update.exe --processStart Discord.exe)
+ipcMain.on('launch:app', (_, p, args, cwd) => {
+  const fb = () => { try { shell.openPath(p); } catch {} };
+  try {
+    if (!args) return fb();
+    const c = spawn(p, [String(args)], { cwd: cwd && fs.existsSync(cwd) ? cwd : path.dirname(p), detached: true, stdio: 'ignore', windowsVerbatimArguments: true });
+    c.on('error', fb); c.unref();
+  } catch { fb(); }
+});
 let appIdx = null, appIdxAt = 0;
 function walk(dir, out, d = 0) {
   try { for (const e of fs.readdirSync(dir, { withFileTypes: true })) { const f = path.join(dir, e.name); if (e.isDirectory()) { if (d < 4) walk(f, out, d + 1); } else if (/\.(lnk|url)$/i.test(e.name)) out.push({ name: e.name.replace(/\.(lnk|url)$/i, ''), path: f }); } } catch {}
