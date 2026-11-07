@@ -3,7 +3,7 @@ const path = require('path'), fs = require('fs'), os = require('os');
 const { execFile, execFileSync, spawn } = require('child_process');
 const cfgFile = () => path.join(app.getPath('userData'), 'config.json');
 const MUSIC = { layout: 'h', width: 340, cover: true, coverSize: 76, coverRadius: 18, artist: true, progress: true, times: true, controls: true, skip: true, hidePaused: false, useAccent: false, color: '#ffffff', op: 0, radius: 30, text: 100 };
-const DEF = { state: 'reduced', accent: '#7aa7ff', blur: 28, opacity: 22, radius: 30, showMedia: true, mediaPos: { x: 0, y: 0.5 }, avatar: '', name: 'Moi', birthday: '', timezone: '', lang: '', setupDone: false, autoLocale: true, autoStart: false, autoUpdate: true, display: null, music: MUSIC, layout: null, task: { enabled: true, hideWin: true, items: null } };
+const DEF = { state: 'reduced', accent: '#7aa7ff', blur: 28, opacity: 22, radius: 30, showMedia: true, mediaPos: { x: 0, y: 0.5 }, avatar: '', name: 'Moi', birthday: '', timezone: '', lang: '', setupDone: false, autoLocale: true, autoStart: false, autoUpdate: true, showInCapture: false, display: null, music: MUSIC, layout: null, task: { enabled: true, hideWin: true, items: null } };
 const SUPPORTED = ['fr', 'en', 'es', 'de', 'it', 'pt', 'nl', 'ja'];
 const uid = () => 'b' + Math.random().toString(36).slice(2, 9);
 const defLayout = (apps = []) => [{ type: 'profile' }, { type: 'stats', cpu: true, ram: true, ssd: true, up: true }, ...apps.map(a => ({ type: 'app', ...a })), { type: 'add' }, { type: 'spacer' }, { type: 'sep' }, { type: 'tog' }, { type: 'set' }, { type: 'hid' }, { type: 'out' }].map(b => ({ id: uid(), visible: true, ...b }));
@@ -47,7 +47,7 @@ function makeIslWin(x, y) {
   islWin = new BrowserWindow({ x: Math.round(x), y: Math.round(y), width: W, height: H, frame: false, transparent: true, alwaysOnTop: true, skipTaskbar: true, resizable: false, hasShadow: false, focusable: true, show: false,
     webPreferences: { preload: path.join(__dirname, 'preload.js'), sandbox: false } });
   const w = islWin; w._ign = true;
-  w.setAlwaysOnTop(true, 'screen-saver'); w.setContentProtection(true); w.setIgnoreMouseEvents(true);
+  w.setAlwaysOnTop(true, 'screen-saver'); w.setContentProtection(!cfg.showInCapture); w.setIgnoreMouseEvents(true);
   w.loadFile('index.html', { query: { island: '1' } });
   w.webContents.once('did-finish-load', () => { if (lastMedia && lastMedia.title && !w.isDestroyed()) w.webContents.send('media', { ...lastMedia, cover: lastCover }); });
   w.on('closed', () => { if (islWin === w) islWin = null; });
@@ -296,6 +296,7 @@ ipcMain.handle('cfg:set', (_, patch) => {
   if ('autoStart' in patch && !!patch.autoStart !== !!cfg.autoStart) applyAutoStart(patch.autoStart);
   const stateChanged = patch.state && patch.state !== cfg.state;
   cfg = { ...cfg, ...patch }; dirty = true;
+  if ('showInCapture' in patch) { const on = !patch.showInCapture; BrowserWindow.getAllWindows().forEach(w => { try { w.setContentProtection(on); } catch {} }); }
   if ('display' in patch) { fit(); sendScreens(); lastShot = null; }
   if (islWin && !islWin.isDestroyed() && !islWin.webContents.isLoading()) islWin.webContents.send('cfg:sync', patch); clearTimeout(wt); wt = setTimeout(flushCfg, 300);
   if (stateChanged && mainCap && !capBusy) capture();
@@ -311,7 +312,7 @@ app.whenReady().then(() => {
   win = new BrowserWindow({ ...(fs.existsSync(iconPath) ? { icon: iconPath } : {}), frame: false, transparent: true, alwaysOnTop: true, skipTaskbar: true, resizable: false, hasShadow: false, focusable: true,
     webPreferences: { preload: path.join(__dirname, 'preload.js'), sandbox: false } });
   win.setAlwaysOnTop(true, 'screen-saver');
-  win.setContentProtection(true);
+  win.setContentProtection(!cfg.showInCapture);
   win.setIgnoreMouseEvents(true); win._ign = true;
   win.loadFile('index.html'); fit();
   const onDisp = () => { if (win && !win.isDestroyed()) { fit(); sendScreens(); } if (islWin && !islWin.isDestroyed()) { const b = islWin.getBounds(), c = { x: b.x + b.width / 2, y: b.y + b.height / 2 }; if (!screen.getAllDisplays().some(d => c.x >= d.bounds.x && c.x < d.bounds.x + d.bounds.width && c.y >= d.bounds.y && c.y < d.bounds.y + d.bounds.height)) attachIsland(null); } };
@@ -415,7 +416,7 @@ ipcMain.on('launch:app', (_, p, args, cwd) => {
   const fb = () => { try { shell.openPath(p); } catch {} };
   try {
     if (!args) return fb();
-    const c = spawn(p, [String(args)], { cwd: cwd && fs.existsSync(cwd) ? cwd : path.dirname(p), detached: true, stdio: 'ignore', windowsVerbatimArguments: true });
+    const c = spawn(p, [String(args)], { cwd: cwd && fs.existsSync(cwd) ? cwd : path.dirname(p), stdio: 'ignore', windowsHide: true, windowsVerbatimArguments: true });
     c.on('error', fb); c.unref();
   } catch { fb(); }
 });
@@ -496,10 +497,12 @@ const repoOf = () => {
   return m && !/^OWNER$/i.test(m[1]) ? m[1] + '/' + m[2] : null;
 };
 const upd = { state: 'idle', cur: app.getVersion(), ver: '', notes: '', pct: 0, err: '', page: '', exe: false, canInstall: !!process.env.PORTABLE_EXECUTABLE_FILE };
-let updFile = '', updUrl = '', updBusy = false, updApplied = false;
+let updFile = '', updUrl = '', updBusy = false, updApplied = false, updGo = false;
 const setUpd = p => { Object.assign(upd, p); if (win && !win.isDestroyed()) win.webContents.send('upd', upd); };
 const newer = (a, b) => { const f = v => String(v).replace(/^v/i, '').split(/[.\-+]/).map(n => parseInt(n) || 0); const x = f(a), y = f(b); for (let i = 0; i < 3; i++) { if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0); } return false; };
 async function checkUpdate(manual) {
+  if (manual && upd.state === 'ready') { if (applyUpdate(true)) app.quit(); return; }
+  if (manual) updGo = true;
   if (updBusy || upd.state === 'downloading' || upd.state === 'ready') return;
   const repo = repoOf(); if (!repo) { if (manual) setUpd({ state: 'error', err: 'repo' }); return; }
   updBusy = true; if (manual) setUpd({ state: 'checking', err: '' });
@@ -508,12 +511,12 @@ async function checkUpdate(manual) {
     if (r.status === 404) throw new Error('404');
     if (!r.ok) throw new Error('HTTP ' + r.status);
     const j = await r.json(), ver = String(j.tag_name || '').replace(/^v/i, '');
-    if (!ver || !newer(ver, app.getVersion())) { setUpd({ state: 'uptodate', ver: '', err: '' }); return; }
+    if (!ver || !newer(ver, app.getVersion())) { updGo = false; setUpd({ state: 'uptodate', ver: '', err: '' }); return; }
     const a = (j.assets || []).find(x => /\.exe$/i.test(x.name));
     updUrl = a ? a.browser_download_url : '';
     setUpd({ state: 'available', ver, notes: String(j.body || '').slice(0, 600), page: j.html_url || '', pct: 0, err: '', exe: !!updUrl });
-    if (cfg.autoUpdate !== false && updUrl && upd.canInstall) downloadUpdate();
-  } catch (e) { if (manual) setUpd({ state: 'error', err: String(e.message || e) }); else if (upd.state === 'checking') setUpd({ state: 'idle' }); }
+    if ((cfg.autoUpdate !== false || manual) && updUrl && upd.canInstall) downloadUpdate(); else updGo = false;
+  } catch (e) { updGo = false; if (manual) setUpd({ state: 'error', err: String(e.message || e) }); else if (upd.state === 'checking') setUpd({ state: 'idle' }); }
   finally { updBusy = false; }
 }
 async function downloadUpdate() {
@@ -536,6 +539,7 @@ async function downloadUpdate() {
     if (total && got !== total) throw new Error('size');
     updFile = part.replace(/\.part$/, ''); fs.renameSync(part, updFile);
     setUpd({ state: 'ready', pct: 100 });
+    if (updGo) { updGo = false; setTimeout(() => { if (applyUpdate(true)) app.quit(); }, 1000); }
   } catch (e) { setUpd({ state: 'error', err: String(e.message || e) }); }
 }
 // remplace l'exe portable une fois l'app fermée (script détaché, avec nouvelles tentatives tant que le fichier est verrouillé)
@@ -545,7 +549,7 @@ function applyUpdate(relaunch) {
   updApplied = true;
   const q = s => s.replace(/%/g, '%%'), bat = path.join(path.dirname(updFile), 'apply.cmd');
   fs.writeFileSync(bat, ['@echo off', 'set n=0', ':r', 'set /a n+=1', 'ping 127.0.0.1 -n 2 >nul', `move /y "${q(updFile)}" "${q(target)}" >nul 2>&1`, 'if not errorlevel 1 goto ok', 'if %n% lss 60 goto r', 'exit /b 1', ':ok', relaunch ? `start "" "${q(target)}"` : 'rem', 'exit /b 0'].join('\r\n'));
-  try { spawn('cmd.exe', ['/c', bat], { detached: true, stdio: 'ignore', windowsHide: true }).unref(); return true; } catch { updApplied = false; return false; }
+  try { spawn('cmd.exe', ['/c', bat], { stdio: 'ignore', windowsHide: true }).unref(); return true; } catch { updApplied = false; return false; }
 }
 ipcMain.handle('upd:get', () => upd);
 ipcMain.on('upd:check', () => checkUpdate(true));

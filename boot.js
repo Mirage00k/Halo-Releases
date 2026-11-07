@@ -49,7 +49,7 @@ function relaunch() {
   try {
     if (exe) {
       const cmd = `ping 127.0.0.1 -n 3 >nul & start "" "${exe.replace(/%/g, '%%')}"`;
-      spawn('cmd.exe', ['/d', '/s', '/c', `"${cmd}"`], { detached: true, stdio: 'ignore', windowsHide: true, windowsVerbatimArguments: true }).unref();
+      spawn('cmd.exe', ['/d', '/s', '/c', `"${cmd}"`], { stdio: 'ignore', windowsHide: true, windowsVerbatimArguments: true }).unref();
     } else app.relaunch();
   } catch {}
   app.quit();
@@ -66,9 +66,9 @@ const patchUrl = () => (pkg.halo && pkg.halo.patchUrl) || (repoOf() ? `https://r
 const emit = s => BrowserWindow.getAllWindows().forEach(w => { try { if (!w.isDestroyed()) w.webContents.send('patch', { ...s, current: curVersion }); } catch {} });
 const autoOn = () => { const c = rd(path.join(app.getPath('userData'), 'config.json')); return !c || c.autoUpdate !== false; };
 
-let busy = false;
+let busy = false, pendingManual = false;
 async function checkPatch(manual) {
-  if (busy) return; busy = true;
+  if (busy) { if (manual) pendingManual = true; return; } busy = true;
   try {
     const url = patchUrl(); if (!url) { if (manual) emit({ state: 'error', err: 'repo' }); return; }
     if (manual) emit({ state: 'checking' });
@@ -88,9 +88,9 @@ async function checkPatch(manual) {
     rm(DIR); fs.renameSync(NEXT, DIR);
     meta = { version: p.version, exe: EXE_VER, tries: 0, bad: meta.bad || [] }; wr(META, meta);
     emit({ state: 'ready', version: p.version });
-    setTimeout(relaunch, 3000);
+    setTimeout(relaunch, manual ? 1200 : 3000);
   } catch (e) { rm(NEXT); if (manual) emit({ state: 'error', err: String(e.message || e) }); }
-  finally { busy = false; }
+  finally { busy = false; if (pendingManual) { pendingManual = false; checkPatch(true); } }
 }
 
 ipcMain.on('patch:check', () => checkPatch(true));
