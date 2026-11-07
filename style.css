@@ -292,3 +292,14 @@ body.isl-mode #bar,body.isl-mode #tray{display:none!important}
 /* flèche (barre masquée) déplaçable */
 #bar.hdragging{cursor:grabbing}
 #bar.hdragging:hover{transform:scale(1.04)}
+/* ===== Mode « Visible en capture d'écran » : fenêtres en couleurs hyper vives ===== */
+body.vivid .glass{--vc1:#ff00e6;--vc2:#ffee00}
+body.vivid #bar{--vc1:#00ffff;--vc2:#ff00ff}
+body.vivid .mwin{--vc1:#00ff00;--vc2:#00ff00}
+body.vivid #tray{--vc1:#ff8a00;--vc2:#ff0066}
+body.vivid #task{--vc1:#00e5ff;--vc2:#7a00ff}
+body.vivid #isl .island{--vc1:#ff0066;--vc2:#ffd500}
+body.vivid .fold,body.vivid .pop,body.vivid .res,body.vivid .upd{--vc1:#00ffc8;--vc2:#0066ff}
+body.vivid .glass::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;background:linear-gradient(180deg,var(--vc1),var(--vc2));opacity:.88}
+body.vivid .gbg{filter:saturate(3) brightness(1.2)}
+body.vivid .mwin.glass{background:rgba(255,255,255,.04)}

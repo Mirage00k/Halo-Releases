@@ -116,7 +116,7 @@ const ic = (n, s = 22) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" f
 const fmt = s => isFinite(s) ? Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0') : '0:00';
 const clockStr = () => { const o = { weekday: 'short', hour: '2-digit', minute: '2-digit' }; try { return new Date().toLocaleString(cfg.lang || 'en', { ...o, timeZone: cfg.timezone || undefined }); } catch { return new Date().toLocaleString('en', o); } };
 const persist = p => { Object.assign(cfg, p); return api.setCfg(p); };
-const theme = () => { const r = document.documentElement.style; const dpr = window.devicePixelRatio || 1; r.setProperty('--bw', Math.max(1, Math.round(1.5 * dpr)) / dpr + 'px'); r.setProperty('--accent', cfg.accent); r.setProperty('--blur', cfg.blur + 'px'); r.setProperty('--op', cfg.opacity / 100); r.setProperty('--r', cfg.radius + 'px'); paintGlass(); };
+const theme = () => { const r = document.documentElement.style; const dpr = window.devicePixelRatio || 1; r.setProperty('--bw', Math.max(1, Math.round(1.5 * dpr)) / dpr + 'px'); r.setProperty('--accent', cfg.accent); r.setProperty('--blur', cfg.blur + 'px'); r.setProperty('--op', cfg.opacity / 100); r.setProperty('--r', cfg.radius + 'px'); document.body.classList.toggle('vivid', !!cfg.showInCapture); paintGlass(); };
 const item = (iconH, label, id, i, extra = '') => `<div class="item" data-tip="${esc(label)}" ${id ? `id="${id}"` : ''} ${extra} style="--i:${i}"><span class="ic">${iconH}</span><span class="lbl">${esc(label)}</span></div>`;
 
 /* ===== Modules de la barre latérale (cfg.layout : liste ordonnée) ===== */
@@ -419,7 +419,7 @@ function drawWinMain(still) {
   if (g('s-tz')) g('s-tz').onchange = e => { persist({ timezone: e.target.value, autoLocale: false }); drawWinMain(true); };
   if (g('s-start')) g('s-start').onchange = e => persist({ autoStart: e.target.checked });
   if (g('s-upd')) g('s-upd').onchange = e => persist({ autoUpdate: e.target.checked });
-  if (g('s-cap')) g('s-cap').onchange = e => persist({ showInCapture: e.target.checked });
+  if (g('s-cap')) g('s-cap').onchange = e => { persist({ showInCapture: e.target.checked }); theme(); };
   paintUpdRow();
   if (t === 'screens') {
     m.querySelectorAll('[data-sc],.scr').forEach(e => e.onclick = () => { const id = +(e.dataset.sc || e.dataset.id), s = SCR.find(x => x.id === id); if (s && !s.current) persist({ display: id }); });
