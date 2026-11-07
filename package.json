@@ -1,0 +1,45 @@
+{
+  "name": "halo",
+  "version": "0.1.0",
+  "main": "boot.js",
+  "repository": "github.com/Mirage00k/Halo-Releases",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win portable --publish never",
+    "release": "electron-builder --win portable --publish always",
+    "patch": "node make-patch.js"
+  },
+  "dependencies": {
+    "lucide-static": "^0.460.0"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  },
+  "build": {
+    "appId": "com.halo.app",
+    "productName": "Halo",
+    "artifactName": "Halo-${version}.exe",
+    "files": [
+      "boot.js",
+      "main.js",
+      "preload.js",
+      "renderer.js",
+      "style.css",
+      "index.html",
+      "*.ps1",
+      "icon/**",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "*.ps1"
+    ],
+    "publish": [
+      { "provider": "github", "releaseType": "release" }
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "icon/icon.ico"
+    }
+  }
+}
