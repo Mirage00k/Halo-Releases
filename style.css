@@ -282,3 +282,13 @@ body.isl-mode #bar,body.isl-mode #tray{display:none!important}
 .ftile .ti .tint{width:32px;height:32px}
 .fg .tint{width:100%;height:100%}
 #bar.filedrop{outline:2px dashed var(--accent);outline-offset:-3px}
+
+/* sous-catégories des paramètres */
+.ssec{display:flex;align-items:center;gap:12px;margin:20px 2px 0;font-size:11.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;opacity:.66}
+.ssec::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.18)}
+.ssec:not(:has(span))::after{opacity:.7}
+.wmain h2+.ssec{margin-top:6px}
+.tsep{flex:none;height:1px;margin:7px 10px;background:rgba(255,255,255,.16)}
+/* flèche (barre masquée) déplaçable */
+#bar.hdragging{cursor:grabbing}
+#bar.hdragging:hover{transform:scale(1.04)}

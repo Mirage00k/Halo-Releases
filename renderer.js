@@ -22,7 +22,7 @@ const I18N = {
     mWidth: 'Largeur', mRadius: 'Arrondi de l’île', mText: 'Taille du texte', mGlass: 'Intensité du verre', mGlassAuto: 'Auto = suit le réglage global', mCover: 'Pochette', mCoverSize: 'Taille de la pochette', mCoverRound: 'Arrondi de la pochette',
     mArtist: 'Artiste', mProg: 'Barre de progression', mTimes: 'Temps écoulé / durée', mCtl: 'Contrôles de lecture', mSkip: 'Boutons précédent / suivant', mHidePaused: 'Masquer en pause', mHidePausedSub: 'L’île disparaît quand la lecture est en pause',
     mUseAccent: 'Progression à la couleur d’accent', mColor: 'Couleur de la progression', mReset: 'Réinitialiser l’île', auto: 'Auto',
-    bState: 'État de la barre', sRed: 'Réduite', sExp: 'Étendue', sHid: 'Cachée', bAdd: 'Ajouter un élément', bAddApp: 'App', bAddSep: 'Séparateur', bAddSpacer: 'Espace', mFolder: 'Dossier', bAddFolder: 'Dossier', emptyFolder: 'Dossier vide : glisse des apps ici', tTask: 'Barre des tâches', tStart: 'Démarrer', tSearch: 'Rechercher…', tWeb: 'Rechercher « {0} » sur le web', tPin: 'Épingler', tkOn: 'Barre des tâches personnalisée', tkOnSub: 'Affiche la barre en bas à la place de celle de Windows', tkHide: 'Masquer la barre Windows', tkHideSub: 'Masque la barre Windows tant que Halo tourne (restaurée à la fermeture)', tkAdd: 'Applications épinglées', tkImport: 'Importer de Windows', tBg: 'Applications en arrière-plan', tWifi: 'Wi‑Fi', tNoNet: 'Non connecté', tWifiSet: 'Paramètres Wi‑Fi', tNoBg: 'Aucune application', tMute: 'Muet', tVol: 'Volume : {0}%', mApps: '{0} app(s)', bReset: 'Réinitialiser la barre', bResetSub: 'Remet les modules par défaut (tes apps sont conservées)',
+    sProfile: 'Profil', sLocale: 'Langue et heure', sStartup: 'Démarrage', sUpdates: 'Mises à jour', sApp: 'Application', sColors: 'Couleurs', sGlass: 'Verre et forme', sMIsland: 'Île musique', sMLayout: 'Disposition et style', sMContent: 'Contenu affiché', sBState: 'Affichage', sBModules: 'Éléments de la barre', sTkApps: 'Applications épinglées', sScrMap: 'Disposition des écrans', sScrList: 'Écrans détectés', bState: 'État de la barre', sRed: 'Réduite', sExp: 'Étendue', sHid: 'Cachée', bAdd: 'Ajouter un élément', bAddApp: 'App', bAddSep: 'Séparateur', bAddSpacer: 'Espace', mFolder: 'Dossier', bAddFolder: 'Dossier', emptyFolder: 'Dossier vide : glisse des apps ici', tTask: 'Barre des tâches', tStart: 'Démarrer', tSearch: 'Rechercher…', tWeb: 'Rechercher « {0} » sur le web', tPin: 'Épingler', tkOn: 'Barre des tâches personnalisée', tkOnSub: 'Affiche la barre en bas à la place de celle de Windows', tkHide: 'Masquer la barre Windows', tkHideSub: 'Masque la barre Windows tant que Halo tourne (restaurée à la fermeture)', tkAdd: 'Applications épinglées', tkImport: 'Importer de Windows', tBg: 'Applications en arrière-plan', tWifi: 'Wi‑Fi', tNoNet: 'Non connecté', tWifiSet: 'Paramètres Wi‑Fi', tNoBg: 'Aucune application', tMute: 'Muet', tVol: 'Volume : {0}%', mApps: '{0} app(s)', bReset: 'Réinitialiser la barre', bResetSub: 'Remet les modules par défaut (tes apps sont conservées)',
     editItem: 'Modifier l’élément', newApp: 'Nouvelle app', name: 'Nom', namePh: 'Ex : Steam', path: 'Chemin / lien', pathSub: 'Exécutable, raccourci ou lien', label: 'Libellé', labelSub: 'Laisse vide pour le nom par défaut', icon: 'Icône', iconSearch: 'Chercher une icône…',
     logo: 'Logo personnalisé', logoSub: 'Remplace l’icône (PNG, JPG, WebP, GIF…)', cancel: 'Annuler', add: 'Ajouter', save: 'Enregistrer', byDefault: 'Par défaut', statsShow: 'Informations affichées',
     suTitle: 'Configuration du profil', step: 'Étape {0} / {1}', start: 'Commencer', cont: 'Continuer', finish: 'Terminer', back: 'Retour', modify: 'Modifier', detected: 'Détecté automatiquement',
@@ -42,7 +42,7 @@ const I18N = {
     mWidth: 'Width', mRadius: 'Island roundness', mText: 'Text size', mGlass: 'Glass intensity', mGlassAuto: 'Auto = follows the global setting', mCover: 'Cover art', mCoverSize: 'Cover size', mCoverRound: 'Cover roundness',
     mArtist: 'Artist', mProg: 'Progress bar', mTimes: 'Elapsed / duration', mCtl: 'Playback controls', mSkip: 'Previous / next buttons', mHidePaused: 'Hide when paused', mHidePausedSub: 'The island disappears when playback is paused',
     mUseAccent: 'Progress in accent color', mColor: 'Progress color', mReset: 'Reset island', auto: 'Auto',
-    bState: 'Bar state', sRed: 'Reduced', sExp: 'Expanded', sHid: 'Hidden', bAdd: 'Add an item', bAddApp: 'App', bAddSep: 'Separator', bAddSpacer: 'Space', mFolder: 'Folder', bAddFolder: 'Folder', emptyFolder: 'Empty folder: drag apps here', tTask: 'Taskbar', tStart: 'Start', tSearch: 'Search…', tWeb: 'Search the web for “{0}”', tPin: 'Pin', tkOn: 'Custom taskbar', tkOnSub: 'Shows the bar at the bottom instead of Windows’', tkHide: 'Hide the Windows taskbar', tkHideSub: 'Hides the Windows taskbar while Halo runs (restored on exit)', tkAdd: 'Pinned apps', tkImport: 'Import from Windows', tBg: 'Background apps', tWifi: 'Wi‑Fi', tNoNet: 'Not connected', tWifiSet: 'Wi‑Fi settings', tNoBg: 'No apps', tMute: 'Mute', tVol: 'Volume: {0}%', mApps: '{0} app(s)', bReset: 'Reset the bar', bResetSub: 'Restores default modules (your apps are kept)',
+    sProfile: 'Profile', sLocale: 'Language & time', sStartup: 'Startup', sUpdates: 'Updates', sApp: 'Application', sColors: 'Colors', sGlass: 'Glass & shape', sMIsland: 'Music island', sMLayout: 'Layout & style', sMContent: 'Displayed content', sBState: 'Display', sBModules: 'Bar items', sTkApps: 'Pinned apps', sScrMap: 'Screen layout', sScrList: 'Detected displays', bState: 'Bar state', sRed: 'Reduced', sExp: 'Expanded', sHid: 'Hidden', bAdd: 'Add an item', bAddApp: 'App', bAddSep: 'Separator', bAddSpacer: 'Space', mFolder: 'Folder', bAddFolder: 'Folder', emptyFolder: 'Empty folder: drag apps here', tTask: 'Taskbar', tStart: 'Start', tSearch: 'Search…', tWeb: 'Search the web for “{0}”', tPin: 'Pin', tkOn: 'Custom taskbar', tkOnSub: 'Shows the bar at the bottom instead of Windows’', tkHide: 'Hide the Windows taskbar', tkHideSub: 'Hides the Windows taskbar while Halo runs (restored on exit)', tkAdd: 'Pinned apps', tkImport: 'Import from Windows', tBg: 'Background apps', tWifi: 'Wi‑Fi', tNoNet: 'Not connected', tWifiSet: 'Wi‑Fi settings', tNoBg: 'No apps', tMute: 'Mute', tVol: 'Volume: {0}%', mApps: '{0} app(s)', bReset: 'Reset the bar', bResetSub: 'Restores default modules (your apps are kept)',
     editItem: 'Edit item', newApp: 'New app', name: 'Name', namePh: 'E.g. Steam', path: 'Path / link', pathSub: 'Executable, shortcut or link', label: 'Label', labelSub: 'Leave empty for the default name', icon: 'Icon', iconSearch: 'Search an icon…',
     logo: 'Custom logo', logoSub: 'Replaces the icon (PNG, JPG, WebP, GIF…)', cancel: 'Cancel', add: 'Add', save: 'Save', byDefault: 'Default', statsShow: 'Displayed information',
     suTitle: 'Profile setup', step: 'Step {0} / {1}', start: 'Get started', cont: 'Continue', finish: 'Finish', back: 'Back', modify: 'Edit', detected: 'Detected automatically',
@@ -62,7 +62,7 @@ const I18N = {
     mWidth: 'Ancho', mRadius: 'Redondeo de la isla', mText: 'Tamaño del texto', mGlass: 'Intensidad del cristal', mGlassAuto: 'Auto = sigue el ajuste global', mCover: 'Carátula', mCoverSize: 'Tamaño de la carátula', mCoverRound: 'Redondeo de la carátula',
     mArtist: 'Artista', mProg: 'Barra de progreso', mTimes: 'Tiempo transcurrido / duración', mCtl: 'Controles de reproducción', mSkip: 'Botones anterior / siguiente', mHidePaused: 'Ocultar en pausa', mHidePausedSub: 'La isla desaparece cuando la reproducción está en pausa',
     mUseAccent: 'Progreso con color de acento', mColor: 'Color del progreso', mReset: 'Restablecer la isla', auto: 'Auto',
-    bState: 'Estado de la barra', sRed: 'Reducida', sExp: 'Expandida', sHid: 'Oculta', bAdd: 'Añadir un elemento', bAddApp: 'App', bAddSep: 'Separador', bAddSpacer: 'Espacio', mFolder: 'Carpeta', bAddFolder: 'Carpeta', emptyFolder: 'Carpeta vacía: arrastra apps aquí', tTask: 'Barra de tareas', tStart: 'Inicio', tSearch: 'Buscar…', tWeb: 'Buscar «{0}» en la web', tPin: 'Anclar', tkOn: 'Barra de tareas personalizada', tkOnSub: 'Muestra la barra abajo en lugar de la de Windows', tkHide: 'Ocultar la barra de Windows', tkHideSub: 'Oculta la barra de Windows mientras Halo está activo (se restaura al salir)', tkAdd: 'Aplicaciones ancladas', tkImport: 'Importar de Windows', tBg: 'Aplicaciones en segundo plano', tWifi: 'Wi‑Fi', tNoNet: 'Sin conexión', tWifiSet: 'Ajustes de Wi‑Fi', tNoBg: 'Ninguna aplicación', tMute: 'Silenciar', tVol: 'Volumen: {0}%', mApps: '{0} app(s)', bReset: 'Restablecer la barra', bResetSub: 'Restaura los módulos por defecto (se conservan tus apps)',
+    sProfile: 'Perfil', sLocale: 'Idioma y hora', sStartup: 'Inicio', sUpdates: 'Actualizaciones', sApp: 'Aplicación', sColors: 'Colores', sGlass: 'Cristal y forma', sMIsland: 'Isla de música', sMLayout: 'Diseño y estilo', sMContent: 'Contenido mostrado', sBState: 'Visualización', sBModules: 'Elementos de la barra', sTkApps: 'Apps ancladas', sScrMap: 'Disposición de pantallas', sScrList: 'Pantallas detectadas', bState: 'Estado de la barra', sRed: 'Reducida', sExp: 'Expandida', sHid: 'Oculta', bAdd: 'Añadir un elemento', bAddApp: 'App', bAddSep: 'Separador', bAddSpacer: 'Espacio', mFolder: 'Carpeta', bAddFolder: 'Carpeta', emptyFolder: 'Carpeta vacía: arrastra apps aquí', tTask: 'Barra de tareas', tStart: 'Inicio', tSearch: 'Buscar…', tWeb: 'Buscar «{0}» en la web', tPin: 'Anclar', tkOn: 'Barra de tareas personalizada', tkOnSub: 'Muestra la barra abajo en lugar de la de Windows', tkHide: 'Ocultar la barra de Windows', tkHideSub: 'Oculta la barra de Windows mientras Halo está activo (se restaura al salir)', tkAdd: 'Aplicaciones ancladas', tkImport: 'Importar de Windows', tBg: 'Aplicaciones en segundo plano', tWifi: 'Wi‑Fi', tNoNet: 'Sin conexión', tWifiSet: 'Ajustes de Wi‑Fi', tNoBg: 'Ninguna aplicación', tMute: 'Silenciar', tVol: 'Volumen: {0}%', mApps: '{0} app(s)', bReset: 'Restablecer la barra', bResetSub: 'Restaura los módulos por defecto (se conservan tus apps)',
     editItem: 'Editar elemento', newApp: 'Nueva app', name: 'Nombre', namePh: 'Ej.: Steam', path: 'Ruta / enlace', pathSub: 'Ejecutable, acceso directo o enlace', label: 'Etiqueta', labelSub: 'Déjalo vacío para el nombre por defecto', icon: 'Icono', iconSearch: 'Buscar un icono…',
     logo: 'Logo personalizado', logoSub: 'Sustituye el icono (PNG, JPG, WebP, GIF…)', cancel: 'Cancelar', add: 'Añadir', save: 'Guardar', byDefault: 'Por defecto', statsShow: 'Información mostrada',
     suTitle: 'Configuración del perfil', step: 'Paso {0} / {1}', start: 'Empezar', cont: 'Continuar', finish: 'Terminar', back: 'Atrás', modify: 'Editar', detected: 'Detectado automáticamente',
@@ -82,7 +82,7 @@ const I18N = {
     mWidth: 'Breite', mRadius: 'Rundung der Insel', mText: 'Textgröße', mGlass: 'Glasintensität', mGlassAuto: 'Auto = globale Einstellung', mCover: 'Cover', mCoverSize: 'Covergröße', mCoverRound: 'Cover-Rundung',
     mArtist: 'Künstler', mProg: 'Fortschrittsbalken', mTimes: 'Verstrichen / Dauer', mCtl: 'Wiedergabesteuerung', mSkip: 'Zurück-/Weiter-Tasten', mHidePaused: 'Bei Pause ausblenden', mHidePausedSub: 'Die Insel verschwindet, wenn die Wiedergabe pausiert',
     mUseAccent: 'Fortschritt in Akzentfarbe', mColor: 'Farbe des Fortschritts', mReset: 'Insel zurücksetzen', auto: 'Auto',
-    bState: 'Zustand der Leiste', sRed: 'Verkleinert', sExp: 'Erweitert', sHid: 'Ausgeblendet', bAdd: 'Element hinzufügen', bAddApp: 'App', bAddSep: 'Trennlinie', bAddSpacer: 'Abstand', mFolder: 'Ordner', bAddFolder: 'Ordner', emptyFolder: 'Leerer Ordner: Apps hierher ziehen', tTask: 'Taskleiste', tStart: 'Start', tSearch: 'Suchen…', tWeb: 'Im Web nach „{0}“ suchen', tPin: 'Anheften', tkOn: 'Eigene Taskleiste', tkOnSub: 'Zeigt die Leiste unten anstelle der Windows-Leiste', tkHide: 'Windows-Taskleiste ausblenden', tkHideSub: 'Blendet die Windows-Taskleiste aus, solange Halo läuft (beim Beenden wiederhergestellt)', tkAdd: 'Angeheftete Apps', tkImport: 'Aus Windows importieren', tBg: 'Hintergrund-Apps', tWifi: 'WLAN', tNoNet: 'Nicht verbunden', tWifiSet: 'WLAN-Einstellungen', tNoBg: 'Keine Apps', tMute: 'Stumm', tVol: 'Lautstärke: {0}%', mApps: '{0} App(s)', bReset: 'Leiste zurücksetzen', bResetSub: 'Stellt die Standardmodule wieder her (Apps bleiben erhalten)',
+    sProfile: 'Profil', sLocale: 'Sprache & Zeit', sStartup: 'Start', sUpdates: 'Updates', sApp: 'Anwendung', sColors: 'Farben', sGlass: 'Glas & Form', sMIsland: 'Musik-Insel', sMLayout: 'Layout & Stil', sMContent: 'Angezeigte Inhalte', sBState: 'Anzeige', sBModules: 'Leistenelemente', sTkApps: 'Angeheftete Apps', sScrMap: 'Bildschirmanordnung', sScrList: 'Erkannte Bildschirme', bState: 'Zustand der Leiste', sRed: 'Verkleinert', sExp: 'Erweitert', sHid: 'Ausgeblendet', bAdd: 'Element hinzufügen', bAddApp: 'App', bAddSep: 'Trennlinie', bAddSpacer: 'Abstand', mFolder: 'Ordner', bAddFolder: 'Ordner', emptyFolder: 'Leerer Ordner: Apps hierher ziehen', tTask: 'Taskleiste', tStart: 'Start', tSearch: 'Suchen…', tWeb: 'Im Web nach „{0}“ suchen', tPin: 'Anheften', tkOn: 'Eigene Taskleiste', tkOnSub: 'Zeigt die Leiste unten anstelle der Windows-Leiste', tkHide: 'Windows-Taskleiste ausblenden', tkHideSub: 'Blendet die Windows-Taskleiste aus, solange Halo läuft (beim Beenden wiederhergestellt)', tkAdd: 'Angeheftete Apps', tkImport: 'Aus Windows importieren', tBg: 'Hintergrund-Apps', tWifi: 'WLAN', tNoNet: 'Nicht verbunden', tWifiSet: 'WLAN-Einstellungen', tNoBg: 'Keine Apps', tMute: 'Stumm', tVol: 'Lautstärke: {0}%', mApps: '{0} App(s)', bReset: 'Leiste zurücksetzen', bResetSub: 'Stellt die Standardmodule wieder her (Apps bleiben erhalten)',
     editItem: 'Element bearbeiten', newApp: 'Neue App', name: 'Name', namePh: 'z. B. Steam', path: 'Pfad / Link', pathSub: 'Programm, Verknüpfung oder Link', label: 'Beschriftung', labelSub: 'Leer lassen für den Standardnamen', icon: 'Symbol', iconSearch: 'Symbol suchen…',
     logo: 'Eigenes Logo', logoSub: 'Ersetzt das Symbol (PNG, JPG, WebP, GIF…)', cancel: 'Abbrechen', add: 'Hinzufügen', save: 'Speichern', byDefault: 'Standard', statsShow: 'Angezeigte Informationen',
     suTitle: 'Profil einrichten', step: 'Schritt {0} / {1}', start: 'Los geht’s', cont: 'Weiter', finish: 'Fertig', back: 'Zurück', modify: 'Ändern', detected: 'Automatisch erkannt',
@@ -135,9 +135,18 @@ const defLayout = (apps = []) => [{ type: 'profile' }, { type: 'stats', cpu: tru
 const setLayout = L => { persist({ layout: L }); buildBar(); refreshFold(); };
 const addBlock = b => { const L = cfg.layout.slice(), i = L.findIndex(x => x.type === 'add'); L.splice(i < 0 ? L.length : i, 0, { id: uid(), visible: true, ...b }); setLayout(L); };
 
-function setState(s) { closeFold(); persist({ state: s }); applyState(); }
+let hdrag = null, hmoved = false;
+// position de la flèche (barre masquée) : libre dans l'écran ; à la réouverture on revient à la position de base (centrée)
+function placeHid() {
+  const hp = cfg.state === 'hidden' && cfg.hidPos;
+  if (!hp) { bar.style.position = bar.style.left = bar.style.top = bar.style.margin = ''; return; }
+  bar.style.position = 'fixed'; bar.style.margin = '0';
+  bar.style.left = Math.round(Math.max(0, Math.min(hp.x, innerWidth - 40))) + 'px';
+  bar.style.top = Math.round(Math.max(0, Math.min(hp.y, innerHeight - 124))) + 'px';
+}
+function setState(s) { closeFold(); persist(s === 'hidden' ? { state: s } : { state: s, hidPos: null }); applyState(); }
 function applyState() {
-  bar.className = 'glass ' + cfg.state; placeIsland();
+  bar.className = 'glass ' + cfg.state; placeHid(); placeIsland();
   ['reduced', 'expanded', 'hidden'].forEach(c => tray.classList.toggle(c, cfg.state === c)); placeTray();
   const t = $('#tog'), tb = cfg.layout.find(x => x.type === 'tog');
   if (t && tb) {
@@ -175,7 +184,7 @@ function buildBar() {
   });
   bindCtn($('#content'), null);
   const pf = $('#prof'); if (pf) pf.onclick = () => openWin('set');
-  $('#tab').onclick = () => setState('reduced');
+  $('#tab').onclick = () => { if (hmoved) return; setState('reduced'); };
   applyState(); paintStats(lastS);
 }
 const islLB = () => 10 + ({ reduced: 76, expanded: 280, hidden: 40 }[cfg.state] || 76) + 14;
@@ -185,7 +194,7 @@ function placeIsland() {
   const w = el.offsetWidth, h = el.offsetHeight, lb = islLB(), rb = Math.max(lb, innerWidth - w - 10), bb = Math.max(10, innerHeight - h - 10), p = cfg.mediaPos || { x: 0, y: .5 };
   el.style.left = Math.round(lb + p.x * (rb - lb)) + 'px'; el.style.top = Math.round(10 + p.y * (bb - 10)) + 'px';
 }
-addEventListener('resize', () => { theme(); placeIsland(); placeTray(); if (FO) placeFold(); });
+addEventListener('resize', () => { theme(); placeHid(); placeIsland(); placeTray(); if (FO) placeFold(); });
 
 /* ===== Île musique (entièrement personnalisable) ===== */
 const MD = { layout: 'h', width: 340, cover: true, coverSize: 76, coverRadius: 18, artist: true, progress: true, times: true, controls: true, skip: true, hidePaused: false, useAccent: false, color: '#ffffff', op: 0, radius: 30, text: 100 };
@@ -318,13 +327,14 @@ function refreshUI() {
   setUL(cfg.lang || SYS.lang); buildBar(); drawTray();
   Object.keys(WINS).forEach(k => { const s = WINS[k]; if (s.open) { buildWin(k); if (s.min) winEl(k).style.display = 'none'; } });
 }
+const sec = k => `<div class="ssec">${k ? `<span>${esc(T(k))}</span>` : ''}</div>`;
 const rowHtml = (l, c, sub = '') => `<div class="row"><div><b>${l}</b>${sub ? `<small>${sub}</small>` : ''}</div>${c}</div>`;
 const stagger = m => [...m.children].forEach((c, i) => c.style.setProperty('--n', i));
 const sw = (id, on, extra = '') => `<label class="sw"><input type="checkbox" id="${id}" ${on ? 'checked' : ''} ${extra}><i></i></label>`;
 const seg = (id, opts, cur) => `<div class="seg" id="${id}">${opts.map(([v, l]) => `<span data-v="${v}" class="${v === cur ? 'on' : ''}">${l}</span>`).join('')}</div>`;
 function drawWinTabs() {
   const w = winEl('set'), s = w.querySelector('.wside'); if (!s) return;
-  s.innerHTML = TABS.map(([k, i, l]) => `<div class="tab ${k === WINS.set.tab ? 'on' : ''}" data-t="${k}">${ic(i, 18)}${esc(T(l))}</div>`).join('');
+  s.innerHTML = TABS.map(([k, i, l], n) => `${n === 1 || n === 3 ? '<div class="tsep"></div>' : ''}<div class="tab ${k === WINS.set.tab ? 'on' : ''}" data-t="${k}">${ic(i, 18)}${esc(T(l))}</div>`).join('');
   s.querySelectorAll('.tab').forEach(t => t.onclick = () => { if (WINS.set.tab === t.dataset.t) return; WINS.set.tab = t.dataset.t; drawWinTabs(); });
   drawWinMain();
 }
@@ -337,27 +347,27 @@ function drawWinMain(still) {
   let body = '';
   if (t === 'general') {
     const tzs = getTz().slice(); if (!tzs.some(x => x[0] === cfg.timezone)) tzs.unshift([cfg.timezone, cfg.timezone]);
-    body = row(T('profilePhoto'), `<div class="rg"><span class="avatar sm">${avatarHtml()}</span><span class="btn" id="s-av">${ic('image', 16)} ${T('choose')}</span>${cfg.avatar ? `<span class="btn" id="s-avx">${ic('trash-2', 16)}</span>` : ''}</div>`, T('photoSub'))
+    body = sec('sProfile') + row(T('profilePhoto'), `<div class="rg"><span class="avatar sm">${avatarHtml()}</span><span class="btn" id="s-av">${ic('image', 16)} ${T('choose')}</span>${cfg.avatar ? `<span class="btn" id="s-avx">${ic('trash-2', 16)}</span>` : ''}</div>`, T('photoSub'))
       + row(T('nickname'), `<input type="text" id="s-name" value="${esc(cfg.name)}">`, T('nickSub'))
-      + row(T('lang'), `<select class="sin" id="s-lang">${LANGS.map(([c, n]) => `<option value="${c}" ${c === cfg.lang ? 'selected' : ''}>${n}</option>`).join('')}</select>`)
+      + sec('sLocale') + row(T('lang'), `<select class="sin" id="s-lang">${LANGS.map(([c, n]) => `<option value="${c}" ${c === cfg.lang ? 'selected' : ''}>${n}</option>`).join('')}</select>`)
       + row(T('tz'), `<select class="sin" id="s-tz">${tzs.map(([v, l]) => `<option value="${esc(v)}" ${v === cfg.timezone ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select>`)
       + row(T('autoSys'), sw('s-auto', cfg.autoLocale !== false), T('autoSub'))
-      + row(T('autoStart'), sw('s-start', !!cfg.autoStart), T('autoStartSub'))
-      + row(T('updTitle'), '<span class="btn" id="u-btn"></span>', '<span id="u-txt"></span>')
+      + sec('sStartup') + row(T('autoStart'), sw('s-start', !!cfg.autoStart), T('autoStartSub'))
+      + sec('sUpdates') + row(T('updTitle'), '<span class="btn" id="u-btn"></span>', '<span id="u-txt"></span>')
       + row(T('updAuto'), sw('s-upd', cfg.autoUpdate !== false), T('updAutoSub'))
-      + row(T('initSetup'), `<span class="btn" id="s-setup">${ic('rotate-ccw', 16)} ${T('relaunch')}</span>`, T('initSub'))
+      + sec('sApp') + row(T('initSetup'), `<span class="btn" id="s-setup">${ic('rotate-ccw', 16)} ${T('relaunch')}</span>`, T('initSub'))
       + row(T('quit'), `<span class="btn" id="s-quit">${ic('log-out', 16)} ${T('quitApp')}</span>`);
-  } else if (t === 'look') body = row(T('accent'), `<input type="color" id="s-acc" value="${cfg.accent}">`) + row(T('blur'), rng('s-blur', cfg.blur, 0, 60, 'px')) + row(T('glass'), rng('s-op', cfg.opacity, 4, 60, '%')) + row(T('round'), rng('s-r', cfg.radius, 8, 44, 'px'));
+  } else if (t === 'look') body = sec('sColors') + row(T('accent'), `<input type="color" id="s-acc" value="${cfg.accent}">`) + sec('sGlass') + row(T('blur'), rng('s-blur', cfg.blur, 0, 60, 'px')) + row(T('glass'), rng('s-op', cfg.opacity, 4, 60, '%')) + row(T('round'), rng('s-r', cfg.radius, 8, 44, 'px'));
   else if (t === 'music') {
-    body = row(T('mIsland'), sw('s-med', cfg.showMedia), T('mIslandSub'))
+    body = sec('sMIsland') + row(T('mIsland'), sw('s-med', cfg.showMedia), T('mIslandSub'))
       + row(T('mPos'), `<div class="pos">${POS.map((q, i) => `<span data-i="${i}" class="${posOn(cfg.mediaPos || { x: 0, y: .5 }, q) ? 'on' : ''}"></span>`).join('')}</div>`, T('mPosSub'))
       + (SCR.length > 1 ? row(T('mScreen'), `<select class="sin" id="m-scr"><option value="" ${cfg.islDet ? '' : 'selected'}>${esc(T('mWithDock'))}</option>${SCR.filter(s => !s.current).map(s => `<option value="${s.id}" ${cfg.islDet && cfg.islDet.did === s.id ? 'selected' : ''}>${esc(T('scrName', s.n))}</option>`).join('')}</select>`, T('mScreenSub')) : '')
-      + row(T('mLayout'), seg('m-layout', [['h', T('lH')], ['v', T('lV')]], M.layout))
+      + sec('sMLayout') + row(T('mLayout'), seg('m-layout', [['h', T('lH')], ['v', T('lV')]], M.layout))
       + row(T('mWidth'), rng('m-width', M.width, 220, 520, 'px'))
       + row(T('mRadius'), rng('m-radius', M.radius, 8, 44, 'px'))
       + row(T('mText'), rng('m-text', M.text, 80, 140, '%'))
       + row(T('mGlass'), rng('m-op', M.op, 0, 60, '%', T('auto')), T('mGlassAuto'))
-      + row(T('mCover'), sw('m-cover', M.cover))
+      + sec('sMContent') + row(T('mCover'), sw('m-cover', M.cover))
       + row(T('mCoverSize'), rng('m-coverSize', M.coverSize, 40, 140, 'px'))
       + row(T('mCoverRound'), rng('m-coverRadius', M.coverRadius, 0, 70, 'px'))
       + row(T('mArtist'), sw('m-artist', M.artist))
@@ -366,36 +376,36 @@ function drawWinMain(still) {
       + row(T('mCtl'), sw('m-controls', M.controls))
       + row(T('mSkip'), sw('m-skip', M.skip))
       + row(T('mHidePaused'), sw('m-hidePaused', M.hidePaused), T('mHidePausedSub'))
-      + row(T('mUseAccent'), sw('m-useAccent', M.useAccent))
+      + sec('sColors') + row(T('mUseAccent'), sw('m-useAccent', M.useAccent))
       + row(T('mColor'), `<input type="color" id="m-color" value="${M.color}">`)
-      + row(T('mReset'), `<span class="btn" id="m-reset">${ic('rotate-ccw', 16)}</span>`);
+      + sec('') + row(T('mReset'), `<span class="btn" id="m-reset">${ic('rotate-ccw', 16)}</span>`);
   } else if (t === 'screens') {
     const S = SCR;
     if (!S.length) body = '<div class="fempty">…</div>';
     else {
       const x0 = Math.min(...S.map(s => s.x)), y0 = Math.min(...S.map(s => s.y)), x1 = Math.max(...S.map(s => s.x + s.w)), y1 = Math.max(...S.map(s => s.y + s.h));
       const k = Math.min(500 / (x1 - x0), 190 / (y1 - y0)), mw = Math.round((x1 - x0) * k), mh = Math.round((y1 - y0) * k);
-      body = `<div class="smapw"><div class="smap" style="width:${mw}px;height:${mh}px">${S.map(s => `<div class="scr ${s.current ? 'on' : ''}" data-id="${s.id}" style="left:${Math.round((s.x - x0) * k)}px;top:${Math.round((s.y - y0) * k)}px;width:${Math.round(s.w * k) - 4}px;height:${Math.round(s.h * k) - 4}px"><b>${s.n}</b><small>${s.pw}×${s.ph}</small></div>`).join('')}</div></div>`
-        + row(T('scrTitle'), `<span class="btn" id="sc-id">${ic('monitor', 16)} ${T('scrId')}</span>`, T('scrCount', S.length) + ' · ' + T('scrIdSub'))
+      body = sec('sScrMap') + `<div class="smapw"><div class="smap" style="width:${mw}px;height:${mh}px">${S.map(s => `<div class="scr ${s.current ? 'on' : ''}" data-id="${s.id}" style="left:${Math.round((s.x - x0) * k)}px;top:${Math.round((s.y - y0) * k)}px;width:${Math.round(s.w * k) - 4}px;height:${Math.round(s.h * k) - 4}px"><b>${s.n}</b><small>${s.pw}×${s.ph}</small></div>`).join('')}</div></div>`
+        + sec('sScrList') + row(T('scrTitle'), `<span class="btn" id="sc-id">${ic('monitor', 16)} ${T('scrId')}</span>`, T('scrCount', S.length) + ' · ' + T('scrIdSub'))
         + S.map(s => row(T('scrName', s.n) + (s.primary ? ' · ' + T('scrMain') : ''), s.current ? `<span class="btn sm off">${ic('check', 14)} ${T('scrCur')}</span>` : `<span class="btn sm" data-sc="${s.id}">${T('scrUse')}</span>`, `${s.pw}×${s.ph} · ${Math.round(s.sf * 100)}%`)).join('')
         + `<div class="hint">${esc(T('scrSub'))}</div><div class="hint">${esc(T('scrIsl'))}</div>`;
     }
   } else if (t === 'task') {
     const K = cfg.task, I = K.items || [];
-    body = row(T('tkOn'), sw('k-on', K.enabled), T('tkOnSub')) + row(T('tkHide'), sw('k-hide', K.hideWin), T('tkHideSub'))
-      + row(T('tkAdd'), `<div class="rg tight wrap"><span class="btn sm" id="k-add">${ic('plus', 14)} ${T('bAddApp')}</span><span class="btn sm" id="k-imp">${ic('download', 14)} ${T('tkImport')}</span></div>`)
+    body = sec('tGeneral') + row(T('tkOn'), sw('k-on', K.enabled), T('tkOnSub')) + row(T('tkHide'), sw('k-hide', K.hideWin), T('tkHideSub'))
+      + sec('sTkApps') + row(T('tkAdd'), `<div class="rg tight wrap"><span class="btn sm" id="k-add">${ic('plus', 14)} ${T('bAddApp')}</span><span class="btn sm" id="k-imp">${ic('download', 14)} ${T('tkImport')}</span></div>`)
       + I.map((b, i) => `<div class="row mrow"><div class="appn"><span class="lprev">${b.logo ? `<img src="${b.logo}">` : ic(b.icon || 'app-window', 20)}</span><span><b>${esc(b.name)}</b><small>${esc(b.path || '')}</small></span></div>
         <div class="rg tight"><span class="btn sm ib ${i ? '' : 'off'}" data-k="up" data-id="${b.id}">${ic('arrow-up', 14)}</span><span class="btn sm ib ${i < I.length - 1 ? '' : 'off'}" data-k="dn" data-id="${b.id}">${ic('arrow-down', 14)}</span><span class="btn sm ib" data-k="rm" data-id="${b.id}">${ic('trash-2', 14)}</span></div></div>`).join('');
   } else {
     const L = cfg.layout, nm = b => b.type === 'folder' ? T('mApps', (b.items || []).length) : b.type === 'app' ? esc(b.path || '') : ['add', 'tog', 'set', 'hid', 'out'].includes(b.type) ? T('mBuiltin') : '';
-    body = row(T('bState'), seg('b-state', [['reduced', T('sRed')], ['expanded', T('sExp')], ['hidden', T('sHid')]], cfg.state))
-      + row(T('bAdd'), `<div class="rg tight wrap"><span class="btn sm" id="b-app">${ic('plus', 14)} ${T('bAddApp')}</span><span class="btn sm" id="b-fold">${ic('folder', 14)} ${T('bAddFolder')}</span><span class="btn sm" id="b-sep">${ic('minus', 14)} ${T('bAddSep')}</span><span class="btn sm" id="b-spc">${ic('move-vertical', 14)} ${T('bAddSpacer')}</span></div>`)
+    body = sec('sBState') + row(T('bState'), seg('b-state', [['reduced', T('sRed')], ['expanded', T('sExp')], ['hidden', T('sHid')]], cfg.state))
+      + sec('sBModules') + row(T('bAdd'), `<div class="rg tight wrap"><span class="btn sm" id="b-app">${ic('plus', 14)} ${T('bAddApp')}</span><span class="btn sm" id="b-fold">${ic('folder', 14)} ${T('bAddFolder')}</span><span class="btn sm" id="b-sep">${ic('minus', 14)} ${T('bAddSep')}</span><span class="btn sm" id="b-spc">${ic('move-vertical', 14)} ${T('bAddSpacer')}</span></div>`)
       + L.map((b, i) => `<div class="row mrow ${b.visible === false ? 'hid' : ''}"><div class="appn"><span class="lprev">${bicon(b, 20)}</span><span><b>${esc(bname(b))}</b>${nm(b) ? `<small>${nm(b)}</small>` : ''}</span></div>
         <div class="rg tight"><span class="btn sm ib ${i ? '' : 'off'}" data-a="up" data-id="${b.id}">${ic('arrow-up', 14)}</span><span class="btn sm ib ${i < L.length - 1 ? '' : 'off'}" data-a="dn" data-id="${b.id}">${ic('arrow-down', 14)}</span>
         ${['sep', 'spacer', 'profile'].includes(b.type) ? '' : `<span class="btn sm ib" data-a="ed" data-id="${b.id}">${ic('pencil', 14)}</span>`}
         ${['app', 'folder', 'sep', 'spacer'].includes(b.type) ? `<span class="btn sm ib" data-a="rm" data-id="${b.id}">${ic('trash-2', 14)}</span>` : ''}
         ${sw('', b.visible !== false, `data-vis="${b.id}" ${b.type === 'set' ? 'disabled' : ''}`)}</div></div>`).join('')
-      + row(T('bReset'), `<span class="btn" id="b-reset">${ic('rotate-ccw', 16)}</span>`, T('bResetSub'));
+      + sec('') + row(T('bReset'), `<span class="btn" id="b-reset">${ic('rotate-ccw', 16)}</span>`, T('bResetSub'));
   }
   m.innerHTML = `<h2>${title}</h2>${body}`; stagger(m);
   // --- général
@@ -840,8 +850,8 @@ async function initTask() {
 /* ===== Mini-fenêtre des fenêtres réduites (sous la sidebar, suit son état) ===== */
 function placeTray() {
   const bw = { reduced: 76, expanded: 280, hidden: 40 }[cfg.state] || 76, bh = cfg.state === 'hidden' ? 124 : Math.min(680, innerHeight - 20);
-  const th = tray.offsetHeight, top = (innerHeight - bh) / 2 + bh + 10;
-  tray.style.width = bw + 'px'; tray.style.left = '10px';
+  const hp = cfg.state === 'hidden' && cfg.hidPos, th = tray.offsetHeight, top = hp ? Math.max(0, Math.min(hp.y, innerHeight - 124)) + bh + 10 : (innerHeight - bh) / 2 + bh + 10;
+  tray.style.width = bw + 'px'; tray.style.left = hp ? Math.round(Math.max(0, Math.min(hp.x, innerWidth - 40))) + 'px' : '10px';
   tray.style.top = Math.round(Math.min(top, Math.max(10, innerHeight - th - 10))) + 'px';
 }
 function drawTray() {
@@ -945,7 +955,7 @@ async function tick() {
 }
 let mv = null;
 document.addEventListener('mousemove', e => {
-  if (drag || idrag || idragI) return;
+  if (drag || idrag || idragI || hdrag) return;
   const g = e.target.closest('.glass'), ig = !g;
   if (ig !== lastIgnore) { lastIgnore = ig; api.ignore(ig); }
   if (g && !mv) mv = requestAnimationFrame(() => { mv = null; const r = g.getBoundingClientRect(); g.style.setProperty('--lx', e.clientX - r.left + 'px'); g.style.setProperty('--ly', e.clientY - r.top + 'px'); });
@@ -1177,3 +1187,22 @@ if (!ISL) {
     setLayout(L); if (WINS.set.open) drawWinMain(true);
   });
 }
+
+
+/* ===== Barre masquée : la flèche se déplace où on veut (glisser) ===== */
+bar.addEventListener('mousedown', e => {
+  if (cfg.state !== 'hidden' || e.button !== 0 || !e.target.closest('#tab')) return;
+  const r = bar.getBoundingClientRect(); hdrag = { sx: e.clientX, sy: e.clientY, x: r.left, y: r.top, on: false }; hmoved = false;
+});
+document.addEventListener('mousemove', e => {
+  if (!hdrag) return;
+  const dx = e.clientX - hdrag.sx, dy = e.clientY - hdrag.sy;
+  if (!hdrag.on) { if (Math.hypot(dx, dy) < 5) return; hdrag.on = true; hmoved = true; api.dragHold(true); bar.classList.add('hdragging'); }
+  cfg.hidPos = { x: Math.max(0, Math.min(hdrag.x + dx, innerWidth - 40)), y: Math.max(0, Math.min(hdrag.y + dy, innerHeight - 124)) };
+  placeHid(); placeTray(); placeIsland(); paintGlass();
+});
+document.addEventListener('mouseup', () => {
+  if (!hdrag) return; const on = hdrag.on; hdrag = null;
+  if (!on) return;
+  api.dragHold(false); bar.classList.remove('hdragging'); persist({ hidPos: cfg.hidPos }); setTimeout(() => { hmoved = false; }, 0);
+});
